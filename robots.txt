@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://igry-live741.github.io/sitemap.xml

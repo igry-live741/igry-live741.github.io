@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Игры live в 2026 году — что делать, когда раунд пошёл не так</title>
+<meta name="description" content="Игры live 2026: разбор шести сбоев за живым столом — обрыв связи, перезапуск раздачи, непринятая ставка, лаг, смена лимита, побочная ставка. Что проверить по Round ID и сколько ждать.">
+<link rel="canonical" href="https://igry-live741.github.io/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Сбои за live-столом: ситуация, смысл, проверка, шаг">
+<meta property="og:description" content="Кейс-таблица для игр live 2026: обрыв связи, ошибка дилера, непринятая ставка, лаг и спор о результате, смена лимита, побочная ставка — и куда смотреть при каждом.">
+<meta property="og:url" content="https://igry-live741.github.io/">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ilv-paper:#f3efe4;--ilv-surface:#faf7ee;--ilv-surface-2:#e8e2d1;--ilv-elevate:#fffdf7;
+  --ilv-ink:#1a241c;--ilv-ink-2:#44514a;--ilv-ink-3:#6b776e;--ilv-line:#d8d0bd;--ilv-line-2:#b3a98f;
+  --ilv-accent:#1f6b43;--ilv-accent-fill:#256f47;--ilv-accent-soft:#dcebe0;--ilv-on-accent:#f4fbf4;
+  --ilv-good:#2f7d4e;--ilv-good-soft:#d8ecdd;--ilv-bad:#9d3327;--ilv-bad-soft:#f3dedb;--ilv-warn:#8a6412;--ilv-warn-soft:#f0e7cd;
+  --ilv-c1:#1f6b43;--ilv-c2:#b4571f;--ilv-c3:#8a7a14;--ilv-c4:#3d6477;--ilv-axis:#c3bba6;
+  --ilv-display:"Playfair Display","PT Serif",Georgia,serif;--ilv-sans:"Manrope","Segoe UI",Roboto,system-ui,sans-serif;
+  --ilv-t-h1:clamp(2rem,1.3rem + 2.8vw,3.1rem);--ilv-t-h2:clamp(1.42rem,1.18rem + 1vw,1.85rem);--ilv-t-h3:1.12rem;
+  --ilv-t-lead:clamp(1.06rem,1rem + .36vw,1.2rem);--ilv-t-body:1.05rem;--ilv-t-ui:.94rem;--ilv-t-small:.86rem;--ilv-t-micro:.76rem;
+  --ilv-s1:4px;--ilv-s2:8px;--ilv-s3:12px;--ilv-s4:16px;--ilv-s5:24px;--ilv-s6:36px;--ilv-s7:52px;--ilv-s8:72px;
+  --ilv-gut:clamp(16px,4vw,30px);--ilv-band:clamp(42px,6vw,76px);--ilv-measure:70ch;--ilv-wide:1060px;
+  --ilv-r1:4px;--ilv-r2:9px;--ilv-r3:16px;
+  --ilv-sh1:0 1px 2px rgba(26,36,28,.07),0 1px 0 rgba(26,36,28,.04);
+  --ilv-sh2:0 10px 30px -16px rgba(26,36,28,.34);
+  --ilv-ease:cubic-bezier(.2,.8,.3,1);--ilv-fast:150ms;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ilv-paper:#121613;--ilv-surface:#191f1a;--ilv-surface-2:#212a23;--ilv-elevate:#263029;
+  --ilv-ink:#e8ece2;--ilv-ink-2:#b4beb2;--ilv-ink-3:#879184;--ilv-line:#2c362e;--ilv-line-2:#45513f;
+  --ilv-accent:#6fcf97;--ilv-accent-fill:#57bb82;--ilv-accent-soft:#1c2f23;--ilv-on-accent:#0c130d;
+  --ilv-good:#6cc38a;--ilv-good-soft:#15291c;--ilv-bad:#e58b7e;--ilv-bad-soft:#331b18;--ilv-warn:#d8b45a;--ilv-warn-soft:#2e2711;
+  --ilv-c1:#6fcf97;--ilv-c2:#e09b5f;--ilv-c3:#d8b45a;--ilv-c4:#7ba6bf;--ilv-axis:#3a463b;
+  --ilv-sh1:0 1px 2px rgba(0,0,0,.5);--ilv-sh2:0 12px 30px -16px rgba(0,0,0,.75);
+  color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ilv-paper:#121613;--ilv-surface:#191f1a;--ilv-surface-2:#212a23;--ilv-elevate:#263029;
+  --ilv-ink:#e8ece2;--ilv-ink-2:#b4beb2;--ilv-ink-3:#879184;--ilv-line:#2c362e;--ilv-line-2:#45513f;
+  --ilv-accent:#6fcf97;--ilv-accent-fill:#57bb82;--ilv-accent-soft:#1c2f23;--ilv-on-accent:#0c130d;
+  --ilv-good:#6cc38a;--ilv-good-soft:#15291c;--ilv-bad:#e58b7e;--ilv-bad-soft:#331b18;--ilv-warn:#d8b45a;--ilv-warn-soft:#2e2711;
+  --ilv-c1:#6fcf97;--ilv-c2:#e09b5f;--ilv-c3:#d8b45a;--ilv-c4:#7ba6bf;--ilv-axis:#3a463b;
+  --ilv-sh1:0 1px 2px rgba(0,0,0,.5);--ilv-sh2:0 12px 30px -16px rgba(0,0,0,.75);
+  color-scheme:dark;}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+body{margin:0;background:var(--ilv-paper);color:var(--ilv-ink);font:400 var(--ilv-t-body)/1.64 var(--ilv-sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--ilv-display);margin:0;text-wrap:balance}
+h1{font-size:var(--ilv-t-h1);line-height:1.08;font-weight:800;letter-spacing:-.012em;max-inline-size:20ch}
+h2{font-size:var(--ilv-t-h2);line-height:1.18;font-weight:700}
+h3{font-size:var(--ilv-t-h3);line-height:1.3;font-weight:600;font-family:var(--ilv-sans);margin:var(--ilv-s6) 0 var(--ilv-s2)}
+p{margin:0 0 var(--ilv-s3);text-wrap:pretty}
+a{color:var(--ilv-accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--ilv-accent);outline-offset:2px}
+.ilv-num{font-variant-numeric:tabular-nums}
+strong{font-weight:700}
+
+.ilv-mast{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--ilv-surface) 92%,transparent);backdrop-filter:none;border-bottom:1px solid var(--ilv-line);height:58px}
+.ilv-mast .ilv-in{max-width:var(--ilv-wide);margin:0 auto;padding:0 var(--ilv-gut);height:100%;display:flex;align-items:center;gap:var(--ilv-s4)}
+.ilv-logo{font-family:var(--ilv-display);font-weight:800;font-size:1.06rem;color:var(--ilv-ink);text-decoration:none;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.ilv-logo svg{width:24px;height:24px;flex:none}
+.ilv-nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+.ilv-nav::-webkit-scrollbar{display:none}
+.ilv-nav a{color:var(--ilv-ink-2);text-decoration:none;font-size:var(--ilv-t-ui);padding:6px 10px;border-radius:var(--ilv-r1);white-space:nowrap}
+.ilv-nav a:hover{background:var(--ilv-surface-2);color:var(--ilv-ink)}
+.ilv-themebtn{border:1px solid var(--ilv-line-2);background:var(--ilv-elevate);color:var(--ilv-ink-2);border-radius:var(--ilv-r1);width:36px;height:36px;display:grid;place-items:center;cursor:pointer;flex:none}
+.ilv-themebtn svg{width:18px;height:18px}
+
+.ilv-hero{max-width:var(--ilv-wide);margin:0 auto;padding:var(--ilv-band) var(--ilv-gut) var(--ilv-s7);display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.85fr);gap:var(--ilv-s7);align-items:start}
+.ilv-dateline{color:var(--ilv-ink-3);font-size:var(--ilv-t-small);margin-bottom:var(--ilv-s4);letter-spacing:.01em}
+.ilv-lead{font-size:var(--ilv-t-lead);color:var(--ilv-ink-2);margin-top:var(--ilv-s5);max-width:var(--ilv-measure)}
+.ilv-note{display:inline-block;margin-top:var(--ilv-s4);padding:5px 11px;border:1px dashed var(--ilv-line-2);border-radius:var(--ilv-r1);font-size:var(--ilv-t-small);color:var(--ilv-ink-2)}
+.ilv-pick{background:var(--ilv-elevate);border:1px solid var(--ilv-line);border-radius:var(--ilv-r3);padding:var(--ilv-s5);box-shadow:var(--ilv-sh1)}
+.ilv-pick h2{font-family:var(--ilv-sans);font-size:.82rem;font-weight:700;text-transform:none;letter-spacing:.02em;color:var(--ilv-ink-3);margin-bottom:var(--ilv-s3)}
+.ilv-pick ol{margin:0;padding:0;list-style:none;counter-reset:pk}
+.ilv-pick li{counter-increment:pk;position:relative;padding:var(--ilv-s2) 0 var(--ilv-s2) 34px;border-top:1px solid var(--ilv-line)}
+.ilv-pick li:first-child{border-top:0}
+.ilv-pick li::before{content:"С"counter(pk);position:absolute;left:0;top:var(--ilv-s2);font-family:var(--ilv-display);font-weight:700;font-size:.8rem;color:var(--ilv-accent);background:var(--ilv-accent-soft);border-radius:var(--ilv-r1);padding:2px 5px}
+.ilv-pick a{color:var(--ilv-ink);text-decoration:none;font-weight:600;font-size:var(--ilv-t-ui)}
+.ilv-pick a:hover{color:var(--ilv-accent)}
+
+.ilv-band{max-width:var(--ilv-wide);margin:0 auto;padding:var(--ilv-s7) var(--ilv-gut)}
+.ilv-band + .ilv-band{border-top:1px solid var(--ilv-line)}
+.ilv-band > h2,.ilv-band > p,.ilv-band > h3,.ilv-band > ul,.ilv-band > ol{max-width:var(--ilv-measure)}
+.ilv-band ul,.ilv-band ol{padding-left:1.25em}
+.ilv-band li{margin-bottom:var(--ilv-s2)}
+.ilv-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--ilv-sans);font-size:var(--ilv-t-micro);font-weight:700;letter-spacing:.06em;color:var(--ilv-accent);margin-bottom:var(--ilv-s3)}
+.ilv-tag::before{content:"";width:16px;height:2px;background:var(--ilv-accent);border-radius:2px}
+
+.ilv-scroll{overflow-x:auto;margin:var(--ilv-s5) 0;border:1px solid var(--ilv-line);border-radius:var(--ilv-r2);background:var(--ilv-surface)}
+table{border-collapse:collapse;width:100%;font-size:var(--ilv-t-ui);min-width:640px}
+caption{text-align:left;padding:var(--ilv-s3) var(--ilv-s4);color:var(--ilv-ink-2);font-size:var(--ilv-t-small);caption-side:top}
+th,td{padding:11px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--ilv-line)}
+thead th{font-weight:700;color:var(--ilv-ink-2);background:var(--ilv-surface-2);font-size:var(--ilv-t-small);position:sticky;top:0}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tbody th{font-weight:700;background:var(--ilv-surface);position:sticky;left:0;z-index:1;box-shadow:1px 0 0 var(--ilv-line);min-width:168px}
+.ilv-map{min-width:860px}
+.ilv-step{color:var(--ilv-accent);font-weight:600}
+.ilv-y{color:var(--ilv-good)}.ilv-n{color:var(--ilv-ink-3)}.ilv-p{color:var(--ilv-warn)}.ilv-x{color:var(--ilv-bad)}
+
+.ilv-fig{margin:var(--ilv-s5) 0;background:var(--ilv-elevate);border:1px solid var(--ilv-line);border-radius:var(--ilv-r3);padding:var(--ilv-s4);box-shadow:var(--ilv-sh1)}
+.ilv-fig svg{width:100%;height:auto;display:block;font-family:var(--ilv-sans)}
+.ilv-fig figcaption{margin-top:var(--ilv-s3);color:var(--ilv-ink-3);font-size:var(--ilv-t-small)}
+.ilv-fig .ilv-scroll{margin:var(--ilv-s4) 0 0}
+.ilv-fig table{min-width:480px}
+
+.ilv-def{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--ilv-s4);margin:var(--ilv-s5) 0;padding:0;list-style:none}
+.ilv-def li{margin:0;background:var(--ilv-surface);border:1px solid var(--ilv-line);border-radius:var(--ilv-r2);padding:var(--ilv-s4)}
+.ilv-def b{display:block;font-family:var(--ilv-display);font-weight:600;font-size:1.04rem;margin-bottom:var(--ilv-s1)}
+.ilv-def span{font-size:var(--ilv-t-ui);color:var(--ilv-ink-2)}
+
+.ilv-faq{border:1px solid var(--ilv-line);border-radius:var(--ilv-r2);background:var(--ilv-surface);margin-bottom:var(--ilv-s3);max-width:var(--ilv-measure)}
+.ilv-faq summary{cursor:pointer;padding:var(--ilv-s3) var(--ilv-s4);font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:var(--ilv-s3);font-family:var(--ilv-sans)}
+.ilv-faq summary::-webkit-details-marker{display:none}
+.ilv-faq summary::after{content:"+";color:var(--ilv-accent);font-weight:700;flex:none}
+.ilv-faq[open] summary::after{content:"\2212"}
+.ilv-faq .ilv-ans{padding:0 var(--ilv-s4) var(--ilv-s4);color:var(--ilv-ink-2)}
+.ilv-faq .ilv-ans p:last-child{margin-bottom:0}
+
+.ilv-chan{background:var(--ilv-accent-soft);border:1px solid var(--ilv-line);border-radius:var(--ilv-r3);padding:var(--ilv-s5);max-width:var(--ilv-measure)}
+.ilv-chan p{margin-bottom:var(--ilv-s3)}
+.ilv-go{display:inline-block;background:var(--ilv-accent-fill);color:var(--ilv-on-accent);text-decoration:none;padding:11px 20px;border-radius:var(--ilv-r2);font-weight:700;transition:background var(--ilv-fast) var(--ilv-ease)}
+.ilv-go:hover{background:var(--ilv-accent)}
+.ilv-care{border:1px solid var(--ilv-line-2);border-radius:var(--ilv-r2);padding:var(--ilv-s4);font-size:var(--ilv-t-ui);color:var(--ilv-ink-2);max-width:var(--ilv-measure)}
+.ilv-care b{color:var(--ilv-ink)}
+
+.ilv-foot{border-top:1px solid var(--ilv-line);background:var(--ilv-surface);margin-top:var(--ilv-s7)}
+.ilv-foot .ilv-in{max-width:var(--ilv-wide);margin:0 auto;padding:var(--ilv-s6) var(--ilv-gut);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--ilv-s5);font-size:var(--ilv-t-small);color:var(--ilv-ink-3)}
+.ilv-foot b{color:var(--ilv-ink-2)}
+
+@media (max-width:840px){.ilv-hero{grid-template-columns:1fr;gap:var(--ilv-s5)}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","@id":"https://igry-live741.github.io/#page","headline":"Игры live в 2026 году: что делать, когда раунд за живым столом пошёл не так","description":"Игры live 2026: разбор шести сбоев за живым столом — обрыв связи, перезапуск раздачи, непринятая ставка, лаг, смена лимита, побочная ставка. Что проверить по Round ID и сколько ждать.","inLanguage":"ru","datePublished":"2026-10-01","dateModified":"2026-10-01","author":{"@type":"Organization","name":"Редакция «Разбор раунда»"},"publisher":{"@type":"Organization","name":"Разбор раунда"},"mainEntityOfPage":"https://igry-live741.github.io/"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","@id":"https://igry-live741.github.io/#faq","mainEntity":[
+{"@type":"Question","name":"Если связь оборвалась после того, как я подтвердил ставку, она сгорает?","acceptedAnswer":{"@type":"Answer","text":"Нет. Принятая ставка живёт на сервере игры, а не в вашем браузере, поэтому обрыв связи не отменяет её и не меняет результат. Раунд доигрывается без вас, итог считается по тем же правилам, а выигрыш или проигрыш отражается на балансе, когда сессия восстановится. Сгореть ставка может только в одном случае: если до момента No More Bets сервер не успел её принять, и тогда она вообще не участвовала в раунде. Отличить два случая помогает история игры: принятая ставка стоит в журнале с номером раунда, непринятая в нём отсутствует."}},
+{"@type":"Question","name":"Чем перезапуск раздачи отличается от аннуляции раунда?","acceptedAnswer":{"@type":"Answer","text":"Перезапуск раздачи — это пересдача внутри того же стола после ошибки процедуры: дилер открыл лишнюю карту, карта упала, колесо крутанули вне окна ставок. Ставки при этом остаются в силе и переносятся на корректную раздачу. Аннуляция раунда — это полная отмена: раунд объявляется недействительным, все ставки возвращаются на баланс, в истории появляется пометка о возврате. Какой из двух механизмов применён, видно по балансу и по статусу раунда в журнале: при перезапуске ставка продолжает играть, при аннуляции возвращается нетронутой."}},
+{"@type":"Question","name":"Я нажал ставку за секунду до No More Bets, а она не прошла — почему?","acceptedAnswer":{"@type":"Answer","text":"Между нажатием и приёмом ставки есть путь: сигнал идёт до сервера студии и обратно, и на мобильной сети это занимает десятые доли секунды. Если вы нажали кнопку, когда на экране оставалась секунда, фактически ставка дошла до сервера уже после закрытия окна и была отклонена. Усиливает эффект лаг видео: при потоке по HLS картинка отстаёт на 6–30 секунд, таймер на ней показывает запас, которого в реальности уже нет. Проверяется это по тому же журналу — отклонённая ставка не попадает в список принятых; привычка ставить не в последнюю секунду снимает проблему."}},
+{"@type":"Question","name":"По какому времени считается результат, если видео отстаёт от таймера?","acceptedAnswer":{"@type":"Answer","text":"Результат фиксируется на сервере студии в момент реального события — остановки шарика, вскрытия карты — и приходит в интерфейс отдельным сигналом, не из видеокартинки. Поэтому запоздавшее на несколько секунд видео не меняет итог: оно лишь показывает то, что уже произошло и уже зачтено. Спор возникает, когда игрок видит на отстающем видео одно, а в истории записано другое; разрешается он просмотром записи раунда по его номеру, где видеозапись студии и серверный журнал ставок сверяются между собой."}},
+{"@type":"Question","name":"Могут ли изменить лимит стола, пока я за ним сижу?","acceptedAnswer":{"@type":"Answer","text":"Да, оператор меняет коридор ставок стола и между сессиями, и во время сессии — чаще при смене общего стола на VIP-режим, при пересчёте лимитов из евро в рубли по новому курсу или при переводе стола в скоростной формат. Уже принятые ставки это не затрагивает, но следующий раунд может начаться с другого минимума или максимума. Новое значение всегда показано в таблице лимитов стола, которая открывается кнопкой в интерфейсе; если минимум вырос, а бюджет на это не рассчитан, стол меняют, не доставая разницу из азарта."}},
+{"@type":"Question","name":"Куда жаловаться, если побочную ставку не засчитали, и сколько ждать?","acceptedAnswer":{"@type":"Answer","text":"Сначала нужно открыть историю игры и посмотреть, была ли побочная ставка вообще принята и на какую комбинацию: часто она не прошла, потому что её поставили после закрытия окна или на сумму вне лимита именно для этой ставки. Если ставка принята, а выплата не пришла, запрос идёт в поддержку оператора с номером раунда; поддержка отвечает обычно за 24–72 часа, а при спорном случае передаёт запрос в студию, которая поднимает запись раунда, и это занимает от 3 до 14 суток. Если оператор отказывает необоснованно, остаётся жалоба его лицензионному регулятору, где рассмотрение доходит до 30 суток."}}
+]}
+</script>
+</head>
+<body>
+
+<header class="ilv-mast">
+  <div class="ilv-in">
+    <a class="ilv-logo" href="#ilv-top" aria-label="Разбор раунда — в начало">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="var(--ilv-accent)"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="var(--ilv-on-accent)" stroke-width="1.5" stroke-dasharray="2.1 1.7"/><path d="M10.2 9.1v5.8l4.8-2.9z" fill="var(--ilv-on-accent)"/></svg>
+      Разбор раунда
+    </a>
+    <nav class="ilv-nav" aria-label="Разделы">
+      <a href="#ilv-map">Свод</a>
+      <a href="#ilv-anatomy">Раунд</a>
+      <a href="#ilv-drop">Обрыв</a>
+      <a href="#ilv-misdeal">Пересдача</a>
+      <a href="#ilv-late">Ставка</a>
+      <a href="#ilv-lag">Лаг</a>
+      <a href="#ilv-limit">Лимит</a>
+      <a href="#ilv-side">Побочная</a>
+      <a href="#ilv-proof">Доказательства</a>
+      <a href="#ilv-faq">Вопросы</a>
+    </nav>
+    <button class="ilv-themebtn" type="button" id="ilvTheme" aria-label="Переключить тему" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18V3z" fill="currentColor"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="ilv-top">
+
+<section class="ilv-hero">
+  <div>
+    <p class="ilv-dateline">Обновлено 1 октября 2026 · редакция «Разбор раунда»</p>
+    <h1>Игры live в 2026 году: что делать, когда раунд за живым столом пошёл не так</h1>
+    <p class="ilv-lead">Игры live идут в реальном времени, и сбой тут не абстрактный «технический перерыв», а конкретная секунда: оборвалась связь, дилер ошибся, ставка не прошла до закрытия окна. Эта страница собрана как кейс-таблица: шесть типичных ситуаций за живым столом, рядом с каждой — что она означает на самом деле, что проверить и какой шаг сделать. Разбор держится на одном опорном факте: у каждого раунда есть номер и запись, и почти любой спор решается обращением к ним, а не к памяти игрока.</p>
+    <span class="ilv-note">Сроки и пороги в таблицах — расчётная модель по типичным правилам операторов и студий на 2026 год, а не замер конкретного сайта</span>
+  </div>
+  <aside class="ilv-pick" aria-label="Шесть ситуаций — навигатор">
+    <h2>Шесть ситуаций — к разбору</h2>
+    <ol>
+      <li><a href="#ilv-drop">Разрыв связи посреди раунда</a></li>
+      <li><a href="#ilv-misdeal">Ошибка дилера и перезапуск раздачи</a></li>
+      <li><a href="#ilv-late">Ставка не прошла до No More Bets</a></li>
+      <li><a href="#ilv-lag">Лаг трансляции и спор о результате</a></li>
+      <li><a href="#ilv-limit">Изменился лимит стола</a></li>
+      <li><a href="#ilv-side">Побочную ставку не засчитали</a></li>
+    </ol>
+  </aside>
+</section>
+
+<section class="ilv-band" id="ilv-map">
+  <p class="ilv-tag">Свод</p>
+  <h2>Шесть сбоев live-раунда: свод, по которому читать разделы</h2>
+  <p>Таблица ниже — опорная карта страницы. По строкам идут шесть ситуаций, которые чаще всего портят сессию за живым столом; по столбцам — четыре вопроса, одинаковых для каждого случая: что означает то, что вы видите на экране; где это проверить прямо сейчас; и какой шаг делать. Остальные разделы разворачивают каждую строку с данными и схемами, но если времени нет, этой таблицы достаточно, чтобы не растеряться в моменте и не наделать лишнего — например, не ставить повторно ту ставку, которая на самом деле уже принята.</p>
+  <div class="ilv-scroll">
+    <table class="ilv-map">
+      <caption>Кейс-карта: ситуация за live-столом → её смысл → проверка → шаг. Применимо к рулетке, блэкджеку, баккаре и шоу-форматам с живым ведущим.</caption>
+      <thead><tr><th scope="col">Ситуация</th><th scope="col">Что это значит</th><th scope="col">Что проверить</th><th scope="col">Шаг</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Разрыв связи посреди раунда</th><td>Ставка уже на сервере игры; раунд доигрывается без вас, итог не меняется</td><td>История игры: есть ли раунд с номером и вашей ставкой; баланс после переподключения</td><td class="ilv-step">Переподключиться, сверить баланс с историей, повторно не ставить</td></tr>
+        <tr><th scope="row">Ошибка дилера и перезапуск раздачи</th><td>Процедурный сбой: пересдача оставляет ставку в силе, аннуляция возвращает её</td><td>Статус раунда в журнале: «перезапуск» или «возврат»; изменение баланса</td><td class="ilv-step">Дождаться объявления дилера, проверить, перенесена ставка или возвращена</td></tr>
+        <tr><th scope="row">Ставка не прошла до No More Bets</th><td>Сигнал дошёл до сервера после закрытия окна; ставка отклонена и не играет</td><td>Список принятых ставок раунда: отклонённой там нет; баланс не списан</td><td class="ilv-step">Не ставить в последнюю секунду; при лаге видео ориентироваться на серверный таймер</td></tr>
+        <tr><th scope="row">Лаг трансляции и спор о результате</th><td>Видео отстаёт, но итог берётся из серверного сигнала в момент события</td><td>Номер раунда и запись студии; совпадает ли история с тем, что показало видео</td><td class="ilv-step">Запросить проверку раунда по номеру; не доверять отстающей картинке как итогу</td></tr>
+        <tr><th scope="row">Изменился лимит стола</th><td>Оператор сдвинул коридор ставок или перевёл стол в другой режим</td><td>Таблица лимитов стола и валюта; курс пересчёта из евро</td><td class="ilv-step">Открыть лимиты перед ставкой; при росте минимума сменить стол</td></tr>
+        <tr><th scope="row">Побочную ставку не засчитали</th><td>Сайд-бет принят отдельно от основной ставки и по своему лимиту и окну</td><td>История: принята ли побочная ставка, на какую комбинацию и сумму</td><td class="ilv-step">Сверить сайд-бет в журнале; при принятой, но неоплаченной — запрос с номером раунда</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Две вещи делают эту карту рабочей. Первая — история игры: в любом лицензионном live-клиенте есть журнал раундов с номерами, суммами ставок и результатами, и именно он, а не ощущение «я точно поставил», служит доказательством. Вторая — понимание, где проходит граница между браузером игрока и сервером студии. Почти все пугающие ситуации — обрыв связи, зависший экран, непрошедшая ставка — объясняются тем, что эти две стороны рассинхронизировались на несколько секунд, тогда как итог раунда уже зафиксирован на серверной стороне и ждёт, пока клиент снова подключится.</p>
+</section>
+
+<section class="ilv-band" id="ilv-anatomy">
+  <p class="ilv-tag">Раунд</p>
+  <h2>Анатомия live-раунда: окно ставок, No More Bets и расчёт</h2>
+  <p>Чтобы сбои читались, нужно видеть раунд как последовательность фаз с жёсткими границами по времени. Живой стол устроен так: окно ставок открывается на фиксированные секунды, затем дилер объявляет No More Bets и сервер закрывает приём, после чего идёт раздача или вращение, фиксируется результат и считается выплата. Все шесть ситуаций из свода привязаны к конкретной фазе — непринятая ставка рождается на границе окна, спор о результате — на фазе расчёта. Схема ниже показывает типичные длительности фаз рулеточного раунда и то, как на них ложится задержка видео по двум транспортам.</p>
+  <figure class="ilv-fig">
+    <svg viewBox="0 0 800 300" role="img" aria-labelledby="ilv-ax-t ilv-ax-d">
+      <title id="ilv-ax-t">Фазы живого раунда на шкале времени и задержка видео по WebRTC и HLS</title>
+      <desc id="ilv-ax-d">Горизонтальная шкала от нуля до сорока секунд: окно ставок 0–15 секунд, No More Bets на 15 секунде, раздача 15–25, результат на 25, расчёт 25–30; ниже — задержка видео WebRTC около секунды и HLS от шести до тридцати секунд.</desc>
+      <g font-size="12" fill="var(--ilv-ink-3)">
+        <text x="60" y="20">0 с</text><text x="245" y="20">15 с</text><text x="430" y="20">25 с</text><text x="553" y="20">30 с</text><text x="740" y="20">40 с</text>
+      </g>
+      <g stroke="var(--ilv-axis)" stroke-dasharray="2 4">
+        <line x1="60" y1="28" x2="60" y2="270"/><line x1="245" y1="28" x2="245" y2="270"/><line x1="430" y1="28" x2="430" y2="270"/><line x1="553" y1="28" x2="553" y2="270"/><line x1="740" y1="28" x2="740" y2="270"/>
+      </g>
+      <g>
+        <rect x="60" y="40" width="185" height="26" rx="5" fill="var(--ilv-accent-soft)" stroke="var(--ilv-accent)"/>
+        <rect x="245" y="40" width="185" height="26" rx="5" fill="var(--ilv-surface-2)" stroke="var(--ilv-line-2)"/>
+        <rect x="430" y="40" width="123" height="26" rx="5" fill="var(--ilv-good-soft)" stroke="var(--ilv-good)"/>
+      </g>
+      <g font-size="12" fill="var(--ilv-ink)">
+        <text x="68" y="57">Окно ставок · 15 с</text>
+        <text x="253" y="57">Раздача / вращение · 10 с</text>
+        <text x="438" y="57">Расчёт · 5 с</text>
+      </g>
+      <line x1="245" y1="34" x2="245" y2="72" stroke="var(--ilv-bad)" stroke-width="2"/>
+      <text x="150" y="88" font-size="12" fill="var(--ilv-bad)" text-anchor="middle">No More Bets</text>
+      <line x1="430" y1="34" x2="430" y2="72" stroke="var(--ilv-good)" stroke-width="2"/>
+      <text x="430" y="88" font-size="12" fill="var(--ilv-good)" text-anchor="middle">результат зафиксирован</text>
+      <g font-size="13" fill="var(--ilv-ink)">
+        <text x="12" y="150">WebRTC</text>
+        <text x="12" y="210">HLS (резерв)</text>
+      </g>
+      <g stroke-width="13" stroke-linecap="round">
+        <line x1="430" y1="145" x2="442" y2="145" stroke="var(--ilv-good)"/>
+        <line x1="430" y1="205" x2="554" y2="205" stroke="var(--ilv-bad)"/>
+      </g>
+      <g font-size="11" fill="var(--ilv-ink-2)">
+        <text x="450" y="135">≈ 1 с — видно сразу после события</text>
+        <text x="430" y="233">6–30 с — видно, когда ставки уже закрыты</text>
+      </g>
+      <g font-size="12">
+        <text x="60" y="262" fill="var(--ilv-ink-3)">Серверный таймер — общий для всех; видео лишь показывает уже случившееся</text>
+      </g>
+    </svg>
+    <figcaption>Расчётная модель длительности фаз рулеточного раунда и задержки видео, 2026. У скоростных столов окно ставок 8–12 с; шоу-форматы держат 12–15 с. Задержка WebRTC считается от события в студии до картинки на экране.</figcaption>
+    <div class="ilv-scroll">
+      <table>
+        <caption>Те же числа: фазы раунда и когда закрывается приём ставок</caption>
+        <thead><tr><th scope="col">Фаза</th><th scope="col">Начало, с</th><th scope="col">Конец, с</th><th scope="col">Что в этот момент важно</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Окно ставок</th><td class="ilv-num">0</td><td class="ilv-num">15</td><td>ставка должна дойти до сервера до конца окна</td></tr>
+          <tr><th scope="row">No More Bets</th><td class="ilv-num">15</td><td class="ilv-num">15</td><td>приём закрыт; поздняя ставка отклоняется</td></tr>
+          <tr><th scope="row">Раздача / вращение</th><td class="ilv-num">15</td><td class="ilv-num">25</td><td>изменить ставку уже нельзя</td></tr>
+          <tr><th scope="row">Результат</th><td class="ilv-num">25</td><td class="ilv-num">25</td><td>итог фиксируется на сервере студии</td></tr>
+          <tr><th scope="row">Расчёт и выплата</th><td class="ilv-num">25</td><td class="ilv-num">30</td><td>баланс обновляется независимо от видео</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </figure>
+  <p>Ключевой вывод из этой схемы: серверный таймер первичен, видео вторично. Окно ставок закрывается по часам сервера студии, одинаковым для всех за столом, а картинка на экране — лишь трансляция того, что уже происходит. При задержке по WebRTC в районе секунды разницы почти нет, и таймер на видео совпадает с реальным. При откате на HLS картинка отстаёт на 6–30 секунд, и тогда рождаются сразу две ситуации из свода: игрок ставит «вовремя» по видео, но поздно по серверу, и видит результат, когда ставки давно закрыты. Дальше разбор идёт по шести случаям в том же порядке, что и в своде.</p>
+</section>
+
+<section class="ilv-band" id="ilv-drop">
+  <p class="ilv-tag">Случай 1</p>
+  <h2>Разрыв связи посреди раунда: что происходит со ставкой</h2>
+  <p>Самый частый страх за живым столом: экран замер или вылетел клиент в тот момент, когда ставка сделана, а раунд ещё идёт. Здесь важно понять, где физически находится ставка. Как только сервер студии подтвердил приём, ставка записана на серверной стороне и привязана к номеру раунда; ваш браузер держит лишь отображение. Поэтому обрыв связи не отменяет ставку и не влияет на исход — раунд доигрывается по общим правилам, дилер завершает вращение или раздачу, результат фиксируется, а выигрыш или проигрыш проводится по балансу. Когда клиент переподключится, вы увидите уже обновлённый баланс и завершённый раунд в истории.</p>
+  <p>Проверка сводится к двум экранам. Первый — история игры: открыв журнал после переподключения, нужно найти раунд по времени и убедиться, что ставка в нём стоит с правильной суммой, а рядом — результат и сумма зачисления. Второй — баланс до и после: если он изменился на ожидаемую величину, раунд закрыт корректно. Опасный шаг, которого стоит избегать, — поставить ту же ставку заново, решив, что первая «не прошла». При живом столе переподключение почти всегда возвращает вас в уже рассчитанный раунд, и повторная ставка уйдёт в следующий, удвоив риск незаметно для игрока.</p>
+  <ul class="ilv-def">
+    <li><b>Токен сессии</b><span>Ставка привязана к учётной записи и раунду на сервере, а не к вкладке браузера; новая вкладка подхватывает ту же сессию.</span></li>
+    <li><b>Окно переподключения</b><span>У многих клиентов есть пауза в несколько минут, в течение которой стол «помнит» игрока и показывает итог сразу после возврата.</span></li>
+    <li><b>Серверный расчёт</b><span>Итог считается на стороне студии; клиент только отображает его, поэтому обрыв на любой секунде раунда итог не искажает.</span></li>
+  </ul>
+  <p>Отдельно стоит случай, когда связь оборвалась во время раунда с решениями — блэкджек, где нужно брать карту или останавливаться. Если игрок не успел принять решение до истечения таймера хода, система применяет правило по умолчанию: обычно это «остановиться» на сумме от определённого порога или автоматическая игра по базовой стратегии на некоторых столах. Это правило прописано в правилах стола, и его стоит прочитать заранее — именно оно определит руку, если связь подведёт в середине партии. С рулеткой и баккарой такой проблемы нет: после закрытия ставок от игрока ничего не требуется, и обрыв влияет только на то, когда он увидит результат.</p>
+</section>
+
+<section class="ilv-band" id="ilv-misdeal">
+  <p class="ilv-tag">Случай 2</p>
+  <h2>Ошибка дилера и перезапуск раздачи</h2>
+  <p>Живой стол ведёт человек, и процедурные ошибки на нём штатны: лишняя открытая карта, карта, упавшая со стола, шарик, выскочивший из колеса, запуск вращения вне окна ставок. На этот случай у студий есть две разные процедуры, и путать их нельзя, потому что со ставкой они делают противоположное. Перезапуск раздачи (misdeal, re-deal) — это исправление процедуры внутри того же раунда: некорректная карта аннулируется, раздача продолжается или начинается заново, а ставки остаются в силе и переносятся на правильный ход. Аннуляция раунда (void) — это полная отмена: раунд признаётся недействительным, все ставки возвращаются на баланс, в истории появляется пометка о возврате.</p>
+  <div class="ilv-scroll">
+    <table>
+      <caption>Как отличить перезапуск от аннуляции и что происходит со ставкой</caption>
+      <thead><tr><th scope="col">Механизм</th><th scope="col">Повод</th><th scope="col">Что со ставкой</th><th scope="col">След в истории</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Перезапуск раздачи</th><td>ошибка процедуры до результата: лишняя карта, ранний запуск</td><td class="ilv-p">остаётся в силе, переносится на корректный ход</td><td>тот же номер раунда, отметка о пересдаче</td></tr>
+        <tr><th scope="row">Аннуляция раунда</th><td>результат невозможно определить честно: шарик вне колеса, сбой оборудования</td><td class="ilv-y">возвращается на баланс полностью</td><td>номер раунда с пометкой «возврат»</td></tr>
+        <tr><th scope="row">Дисквалификация ставки</th><td>ставка принята с нарушением лимита или после окна</td><td class="ilv-x">снимается именно эта ставка, остальные играют</td><td>ставка помечена как отклонённая</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Что проверить в момент. Сначала послушать дилера или прочитать системное сообщение стола: студия объявляет и перезапуск, и аннуляцию. Затем посмотреть на баланс — при аннуляции ставка вернётся сразу, при перезапуске останется в игре. И финально сверить статус раунда в истории: там будет видно, под каким номером прошёл раунд и какая отметка к нему привязана. Эти три проверки занимают полминуты и снимают главную тревогу — что ошибка дилера «съела» ставку. Честная процедура всегда оставляет след: либо возврат на баланс, либо перенос ставки, и оба отражаются в журнале.</p>
+  <p>Подозрительно выглядит другое. Если аннуляции идут без объявления и без следа в истории, если после «ошибки» ставка просто исчезла, а баланс не изменился, или если стол раз за разом аннулирует именно выигрышные для игроков раунды — это уже не процедурный сбой, а повод зафиксировать номера раундов и обратиться в поддержку. У студий, которые проходят аудит лабораторий вроде GLI или BMM Testlabs, процедура пересдачи и аннуляции описана в правилах игры, а каждое такое событие логируется; отсутствие логов — признак нелицензированного перепродавца потока, а не настоящей студии.</p>
+</section>
+
+<section class="ilv-band" id="ilv-late">
+  <p class="ilv-tag">Случай 3</p>
+  <h2>Ставка не прошла до No More Bets</h2>
+  <p>Ставка сделана, кнопка нажата, а в раунде её нет. Это не «глюк баланса» и чаще всего не ошибка студии: ставка не прошла, потому что сигнал о ней дошёл до сервера после закрытия окна. Между нажатием и приёмом лежит дорога — запрос идёт от телефона до сервера студии и обратно, и на мобильной сети это десятые доли секунды. Если игрок жмёт ставку, когда на таймере остаётся секунда, фактическое время приёма приходится уже на закрытое окно, и сервер отклоняет её. Деньги при этом не списываются: отклонённая ставка не участвует в раунде и не попадает в список принятых.</p>
+  <p>Эффект резко усиливается при лаге видео. Если поток идёт по HLS и отстаёт на 6–30 секунд, таймер на картинке показывает запас, которого в реальности нет: по видео «ещё пять секунд», а серверное окно давно закрыто. Игрок уверен, что поставил вовремя, а сервер видит позднюю ставку. Поэтому третий случай тесно связан с анатомией раунда: ориентироваться надо на поведение серверного интерфейса — если кнопки ставок погасли, окно закрыто, сколько бы ни показывало видео.</p>
+  <p>Что делать. Во-первых, не ставить в последнюю секунду — привычка завершать ставку за три-четыре секунды до нуля снимает проблему почти полностью. Во-вторых, при спорном случае открыть список принятых ставок раунда: если вашей там нет, а баланс не тронут, ставка просто не состоялась, и повторять её в уже идущем раунде нельзя. В-третьих, если ставки не проходят систематически даже при раннем нажатии, причина техническая — высокий пинг, перегруженная сеть или откат на HLS; помогает смена сети, переход из встроенного браузера мессенджера в полноценный Chrome или Safari и принудительный выбор низкого качества видео, чтобы разгрузить канал.</p>
+  <p>Важное разграничение: непринятая ставка и сгоревшая ставка — разные вещи. Непринятая не участвовала в раунде, деньги на месте, ничего возвращать не нужно. Сгоревшей ставки за живым столом в честной механике не бывает: принятая ставка либо выигрывает, либо проигрывает, либо возвращается при аннуляции. Если же в истории видно, что ставка была принята, раунд состоялся, а выплата по выигрышу не пришла, это уже не третий случай, а спор о расчёте — он разбирается через поддержку по номеру раунда, как описано ниже.</p>
+</section>
+
+<section class="ilv-band" id="ilv-lag">
+  <p class="ilv-tag">Случай 4</p>
+  <h2>Лаг трансляции и спор о результате</h2>
+  <p>Четвёртый случай — когда игрок видит на видео одно, а в истории записано другое, и возникает ощущение подмены. Разбирается он через понимание, откуда берётся результат. Итог раунда фиксируется на сервере студии в момент реального события — остановки шарика, вскрытия карты — и приходит в клиент отдельным сигналом данных, не из видеопотока. Видео и результат — два независимых канала: один показывает картинку, другой передаёт число. Поэтому запоздавшее видео не меняет итог, оно лишь с задержкой показывает то, что уже произошло и уже зачтено по балансу.</p>
+  <p>Механика лага описана в разделе про анатомию раунда: WebRTC держит задержку около секунды, а при блокировке UDP плеер откатывается на HLS с задержкой в десятки секунд. На отстающей картинке шарик может «ещё крутиться», когда на сервере уже выпал номер и прошла выплата. Это не обман, а рассинхрон двух каналов. Настоящий спор возникает в редком случае: когда в истории раунда записан один результат, а запись студии по тому же номеру показывает другой. Именно для этого у каждого раунда есть номер и видеозапись — они и служат арбитром.</p>
+  <div class="ilv-scroll">
+    <table>
+      <caption>Транспорт видео, типичная задержка и что это меняет для спора о результате</caption>
+      <thead><tr><th scope="col">Транспорт</th><th scope="col">Задержка, с</th><th scope="col">Совпадает ли с серверным итогом</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">WebRTC</th><td class="ilv-num">0,3 – 1</td><td class="ilv-y">да, картинка и итог идут почти синхронно</td></tr>
+        <tr><th scope="row">LL-HLS / LL-DASH</th><td class="ilv-num">2 – 5</td><td class="ilv-p">итог верен, видео немного отстаёт</td></tr>
+        <tr><th scope="row">HLS классический</th><td class="ilv-num">6 – 30</td><td class="ilv-x">итог верен, но видео вводит в заблуждение</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Что делать при споре. Записать номер раунда и время — это единственное, что нужно поддержке для подъёма записи. Не опираться на отстающее видео как на доказательство: «я видел красное» не аргумент, если серверный журнал и запись студии показывают чёрное. Запрос через поддержку оператора уходит в студию, которая сверяет видеозапись раунда с журналом ставок и расчётом; ответ опирается на запись, а не на слова сторон. Если же результаты в истории систематически расходятся с эфиром или история вовсе недоступна — это признак того, что «live» на сайте не настоящая студийная трансляция, и играть там не стоит независимо от исхода конкретного спора.</p>
+</section>
+
+<section class="ilv-band" id="ilv-limit">
+  <p class="ilv-tag">Случай 5</p>
+  <h2>Изменился лимит стола посреди сессии</h2>
+  <p>Игрок сидит за столом час, ставит от 50 ₽, уходит налить чай, возвращается — а минимальная ставка теперь 200 ₽. Это не ошибка: оператор меняет коридор ставок стола, и не только между сессиями, но и внутри них. Лимиты задаёт оператор в пределах вилки, которую разрешает студия, и правит их по своим причинам — перевод общего стола в VIP-режим вечером, пересчёт порогов из евро в рубли по новому курсу, переключение стола в скоростной формат с другим ритмом и ставками. Уже принятые ставки это не затрагивает: меняется минимум или максимум следующего раунда, а не того, что уже сыгран.</p>
+  <p>Проверить лимит можно всегда и до ставки: в интерфейсе стола есть кнопка с таблицей лимитов, где показаны минимум и максимум по каждому типу ставки. И здесь важно, что лимит стола — это не одно число, а несколько. У рулетки отдельный потолок на прямую ставку на номер, отдельный на дюжину и отдельный на равные шансы; разница между ними доходит до десятков раз, потому что выплата 35 к 1 на номере несёт для оператора больший риск, чем выплата 1 к 1 на цвет. У блэкджека потолок задаётся на бокс, у баккары ограничение на ничью ниже, чем на игрока или банкира. Так что «изменился лимит» иногда означает лишь, что игрок перешёл с равных шансов на ставку на номер и упёрся в её собственный, более низкий потолок.</p>
+  <div class="ilv-scroll">
+    <table>
+      <caption>Почему лимит у стола не один: типы ставок и их потолки, расчётная модель</caption>
+      <thead><tr><th scope="col">Ставка</th><th scope="col">Выплата</th><th scope="col">Относительный потолок</th><th scope="col">Причина</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Равные шансы (цвет, чёт)</th><td class="ilv-num">1 : 1</td><td class="ilv-y">самый высокий</td><td>риск оператора на единицу ставки минимален</td></tr>
+        <tr><th scope="row">Дюжина, колонка</th><td class="ilv-num">2 : 1</td><td class="ilv-p">средний</td><td>выплата выше, потолок ниже</td></tr>
+        <tr><th scope="row">Прямая ставка на номер</th><td class="ilv-num">35 : 1</td><td class="ilv-x">самый низкий</td><td>высокая выплата ограничивает максимум жёстче</td></tr>
+        <tr><th scope="row">Побочная ставка (пары, 21+3)</th><td class="ilv-num">до 30 : 1</td><td class="ilv-x">отдельный, низкий</td><td>считается вне основного лимита бокса</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Что делать. Перед сессией и после любой паузы открывать таблицу лимитов, а не полагаться на память о прошлом визите. Если минимум вырос и бюджет на это не рассчитан, правильный шаг — сменить стол на тот, где коридор прежний, а не добирать разницу из азарта: за живым столом темп высокий, и рост минимума с 50 до 200 ₽ при 30 раундах в час меняет оборот вчетверо. Отдельно стоит следить за валютой стола: студия считает лимиты в евро, а оператор пересчитывает их в рубли, тенге или гривны, и при скачке курса пороги двигаются без отдельного предупреждения — то, что вчера начиналось с 50 ₽, сегодня стартует со 100 ₽ при том же значении в евро.</p>
+</section>
+
+<section class="ilv-band" id="ilv-side">
+  <p class="ilv-tag">Случай 6</p>
+  <h2>Побочную ставку не засчитали</h2>
+  <p>Шестой случай почти всегда распутывается в истории игры. Побочная ставка — Perfect Pairs и 21+3 в блэкджеке, пары игрока и банкира в баккаре, бонусные поля в покерных столах — принимается отдельно от основной и живёт по своим правилам: у неё свой лимит, часто своё окно приёма и своя таблица выплат. Поэтому «не засчитали» обычно означает одно из трёх: побочная ставка не была принята, потому что её поставили после закрытия окна; она не прошла, потому что сумма вышла за её собственный лимит; или комбинация не совпала с тем, что игрок считал выигрышным, из-за особенностей таблицы выплат именно этого стола.</p>
+  <p>Проверка идёт по журналу. Нужно открыть раунд по номеру и посмотреть на список ставок: стоит ли там побочная, на какую сумму и на какую комбинацию. Если побочной ставки в принятых нет, а баланс не списан, она не состоялась — скорее всего, по времени или лимиту. Если побочная принята, а выплаты нет, нужно сверить выпавшую комбинацию с таблицей выплат стола: например, 21+3 платит за комбинацию из двух карт игрока и открытой карты дилера, и «флеш» там — это именно одномастный набор трёх карт, а не совпадение по основной руке.</p>
+  <ul class="ilv-def">
+    <li><b>Отдельное окно приёма</b><span>У части столов побочная ставка закрывается на секунду-две раньше основной; поздняя побочная отклоняется, а основная проходит.</span></li>
+    <li><b>Свой лимит</b><span>Потолок сайд-бета ниже лимита бокса; сумма сверх него не принимается целиком или частью.</span></li>
+    <li><b>Своя таблица выплат</b><span>Комбинация и коэффициент заданы в правилах стола и у разных студий различаются; читать нужно таблицу конкретного стола.</span></li>
+  </ul>
+  <p>Что делать, если побочная ставка принята, комбинация по таблице выигрышная, а выплата не пришла. Это уже не вопрос правил, а спор о расчёте: запрос идёт в поддержку оператора с номером раунда, оттуда — в студию, которая поднимает запись и журнал. Разбор такого случая опирается на те же два источника, что и все остальные: номер раунда и историю. Поэтому привычка фиксировать номер спорного раунда сразу, а не вспоминать его потом, превращает шестой случай из нервного спора в короткую техническую сверку.</p>
+</section>
+
+<section class="ilv-band" id="ilv-proof">
+  <p class="ilv-tag">Доказательства</p>
+  <h2>Куда смотреть и сколько ждать: Round ID, история, запись</h2>
+  <p>Все шесть случаев сходятся к одному инструменту — номеру раунда и записи. Round ID — это уникальный идентификатор, который студия присваивает каждому раунду; по нему служба поддержки находит видеозапись и журнал ставок. История игры в клиенте показывает последние раунды с их номерами, суммами ставок и результатами, и именно она, а не память игрока, служит доказательством в любом споре. Правило простое: как только что-то пошло не так, первым делом — номер раунда и время, остальное восстановится по ним. Сроки ответа зависят от того, на каком уровне решается вопрос, и график ниже показывает их по возрастанию.</p>
+  <figure class="ilv-fig">
+    <svg viewBox="0 0 800 270" role="img" aria-labelledby="ilv-sl-t ilv-sl-d">
+      <title id="ilv-sl-t">Сроки разбора спорного раунда по уровням обращения</title>
+      <desc id="ilv-sl-d">Четыре горизонтальные полосы: авто-возврат при аннуляции — мгновенно; поддержка оператора по номеру раунда — до 72 часов; запрос в студию через оператора — до 14 суток; жалоба регулятору оператора — до 30 суток.</desc>
+      <g font-size="12" fill="var(--ilv-ink-3)">
+        <text x="250" y="20">0</text><text x="370" y="20">3 сут</text><text x="490" y="20">7 сут</text><text x="610" y="20">14 сут</text><text x="748" y="20">30 сут</text>
+      </g>
+      <g stroke="var(--ilv-axis)" stroke-dasharray="2 4">
+        <line x1="250" y1="28" x2="250" y2="240"/><line x1="370" y1="28" x2="370" y2="240"/><line x1="490" y1="28" x2="490" y2="240"/><line x1="610" y1="28" x2="610" y2="240"/><line x1="770" y1="28" x2="770" y2="240"/>
+      </g>
+      <g font-size="13" fill="var(--ilv-ink)">
+        <text x="12" y="56">Авто-возврат при аннуляции</text>
+        <text x="12" y="106">Поддержка оператора по Round ID</text>
+        <text x="12" y="156">Запрос в студию через оператора</text>
+        <text x="12" y="206">Жалоба регулятору оператора</text>
+      </g>
+      <g>
+        <rect x="250" y="44" width="8" height="20" rx="4" fill="var(--ilv-good)"/>
+        <rect x="250" y="94" width="120" height="20" rx="4" fill="var(--ilv-c1)"/>
+        <rect x="250" y="144" width="360" height="20" rx="4" fill="var(--ilv-c3)"/>
+        <rect x="250" y="194" width="520" height="20" rx="4" fill="var(--ilv-c2)"/>
+      </g>
+      <g font-size="12" fill="var(--ilv-ink)" class="ilv-num">
+        <text x="266" y="59">мгновенно</text>
+        <text x="378" y="109">24–72 ч</text>
+        <text x="618" y="159">3–14 сут</text>
+        <text x="700" y="209" fill="var(--ilv-on-accent)">до 30 сут</text>
+      </g>
+    </svg>
+    <figcaption>Расчётная модель сроков разбора по уровням, 2026. Авто-возврат при аннуляции проходит сразу на баланс; верхние уровни включаются, только если нижний не решил вопрос. Регуляторный срок — ориентир по типичным правилам рассмотрения.</figcaption>
+    <div class="ilv-scroll">
+      <table>
+        <caption>Те же сроки: уровень обращения, что нужно приложить и типичное ожидание</caption>
+        <thead><tr><th scope="col">Уровень</th><th scope="col">Что приложить</th><th scope="col">Срок ответа</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Авто-возврат при аннуляции</th><td>ничего — проходит системно</td><td class="ilv-num">мгновенно</td></tr>
+          <tr><th scope="row">Поддержка оператора</th><td>номер раунда, время, суть</td><td class="ilv-num">24–72 ч</td></tr>
+          <tr><th scope="row">Запрос в студию</th><td>номер раунда (поднимает оператор)</td><td class="ilv-num">3–14 сут</td></tr>
+          <tr><th scope="row">Регулятор оператора</th><td>переписка с поддержкой, номера раундов</td><td class="ilv-num">до 30 сут</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </figure>
+  <p>Порядок обращения — снизу вверх. Большинство случаев закрывается на первом же уровне: аннуляция возвращает ставку сама, а спор о расчёте поддержка решает по номеру раунда за сутки-трое. В студию запрос уходит, только если поддержка не смогла ответить на месте и нужна запись; это уже 3–14 суток, потому что архив поднимают вручную по идентификатору. Регулятор — последняя инстанция, к которой прибегают при необоснованном отказе оператора; для русскоязычных сайтов это чаще лицензия Кюрасао, реже мальтийская MGA, и рассмотрение там доходит до месяца. Инстанции внутри России по 244-ФЗ для онлайн-игр с живым дилером нет, поэтому маршрут жалобы всегда ведёт к регулятору оператора, а не к местному органу.</p>
+  <p>Что держать под рукой заранее. Скриншот истории с номером спорного раунда весит больше любых слов; время по часам стола, а не по телефону; суть в одной строке — «ставка 500 ₽ на красное в раунде №…, по видео красное, в истории чёрное». С этим набором разбор идёт быстро и по существу. Без номера раунда поддержка не найдёт запись, и спор превращается в обмен впечатлениями, в котором у игрока нет доказательств. Поэтому единственная привычка, которая реально защищает за живым столом, — фиксировать номер раунда в ту же секунду, когда что-то показалось неправильным.</p>
+</section>
+
+<section class="ilv-band" id="ilv-faq">
+  <p class="ilv-tag">Вопросы</p>
+  <h2>Что ещё спрашивают после спорного раунда</h2>
+  <details class="ilv-faq"><summary>Если связь оборвалась после того, как я подтвердил ставку, она сгорает?</summary><div class="ilv-ans"><p>Нет. Принятая ставка живёт на сервере игры, а не в вашем браузере, поэтому обрыв связи не отменяет её и не меняет результат. Раунд доигрывается без вас, итог считается по тем же правилам, а выигрыш или проигрыш отражается на балансе, когда сессия восстановится. Сгореть ставка может только в одном случае: если до момента No More Bets сервер не успел её принять, и тогда она вообще не участвовала в раунде. Отличить два случая помогает история игры: принятая ставка стоит в журнале с номером раунда, непринятая в нём отсутствует.</p></div></details>
+  <details class="ilv-faq"><summary>Чем перезапуск раздачи отличается от аннуляции раунда?</summary><div class="ilv-ans"><p>Перезапуск раздачи — это пересдача внутри того же стола после ошибки процедуры: дилер открыл лишнюю карту, карта упала, колесо крутанули вне окна ставок. Ставки при этом остаются в силе и переносятся на корректную раздачу. Аннуляция раунда — это полная отмена: раунд объявляется недействительным, все ставки возвращаются на баланс, в истории появляется пометка о возврате. Какой из двух механизмов применён, видно по балансу и по статусу раунда в журнале: при перезапуске ставка продолжает играть, при аннуляции возвращается нетронутой.</p></div></details>
+  <details class="ilv-faq"><summary>Я нажал ставку за секунду до No More Bets, а она не прошла — почему?</summary><div class="ilv-ans"><p>Между нажатием и приёмом ставки есть путь: сигнал идёт до сервера студии и обратно, и на мобильной сети это занимает десятые доли секунды. Если вы нажали кнопку, когда на экране оставалась секунда, фактически ставка дошла до сервера уже после закрытия окна и была отклонена. Усиливает эффект лаг видео: при потоке по HLS картинка отстаёт на 6–30 секунд, таймер на ней показывает запас, которого в реальности уже нет. Проверяется это по тому же журналу — отклонённая ставка не попадает в список принятых; привычка ставить не в последнюю секунду снимает проблему.</p></div></details>
+  <details class="ilv-faq"><summary>По какому времени считается результат, если видео отстаёт от таймера?</summary><div class="ilv-ans"><p>Результат фиксируется на сервере студии в момент реального события — остановки шарика, вскрытия карты — и приходит в интерфейс отдельным сигналом, не из видеокартинки. Поэтому запоздавшее на несколько секунд видео не меняет итог: оно лишь показывает то, что уже произошло и уже зачтено. Спор возникает, когда игрок видит на отстающем видео одно, а в истории записано другое; разрешается он просмотром записи раунда по его номеру, где видеозапись студии и серверный журнал ставок сверяются между собой.</p></div></details>
+  <details class="ilv-faq"><summary>Могут ли изменить лимит стола, пока я за ним сижу?</summary><div class="ilv-ans"><p>Да, оператор меняет коридор ставок стола и между сессиями, и во время сессии — чаще при смене общего стола на VIP-режим, при пересчёте лимитов из евро в рубли по новому курсу или при переводе стола в скоростной формат. Уже принятые ставки это не затрагивает, но следующий раунд может начаться с другого минимума или максимума. Новое значение всегда показано в таблице лимитов стола, которая открывается кнопкой в интерфейсе; если минимум вырос, а бюджет на это не рассчитан, стол меняют, не доставая разницу из азарта.</p></div></details>
+  <details class="ilv-faq"><summary>Куда жаловаться, если побочную ставку не засчитали, и сколько ждать?</summary><div class="ilv-ans"><p>Сначала нужно открыть историю игры и посмотреть, была ли побочная ставка вообще принята и на какую комбинацию: часто она не прошла, потому что её поставили после закрытия окна или на сумму вне лимита именно для этой ставки. Если ставка принята, а выплата не пришла, запрос идёт в поддержку оператора с номером раунда; поддержка отвечает обычно за 24–72 часа, а при спорном случае передаёт запрос в студию, которая поднимает запись раунда, и это занимает от 3 до 14 суток. Если оператор отказывает необоснованно, остаётся жалоба его лицензионному регулятору, где рассмотрение доходит до 30 суток.</p></div></details>
+</section>
+
+<section class="ilv-band" id="ilv-channel">
+  <p class="ilv-tag">Канал</p>
+  <h2>Новые случаи за живым столом разбираем в канале</h2>
+  <div class="ilv-chan">
+    <p>Правила столов, окна ставок и процедуры аннуляции у студий меняются несколько раз в год, а новые спорные случаи появляются после каждого обновления клиента. Эта кейс-карта пересматривается при заметных изменениях, дата последней правки стоит в начале страницы. Короткие разборы свежих ситуаций — непрошедшие ставки на новых скоростных столах, спорные перезапуски, смены лимитов — выходят в телеграм-канале.</p>
+    <a class="ilv-go" href="https://t.me/top_casino_2027" rel="noopener" target="_blank">Канал с разборами</a>
+  </div>
+</section>
+
+<section class="ilv-band" id="ilv-care">
+  <div class="ilv-care">
+    <p><b>18+.</b> За живым столом темп выше, чем кажется: 25–40 раундов в час при ставке 500 ₽ означают оборот 12–20 тысяч рублей за час, и спорная ситуация в этом темпе легко толкает отыграться. Назначьте лимит на сессию до входа в стол и пользуйтесь таймером сессии, если оператор его даёт. Если игра перестала быть развлечением, сделайте перерыв и обратитесь за помощью к специалистам по игровой зависимости.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="ilv-foot">
+  <div class="ilv-in">
+    <div><b>Разбор раунда</b><br>Кейс-карта сбоев за живым столом для русскоязычного игрока. Редакционный материал, без партнёрских ссылок и реферальных кодов.</div>
+    <div><b>О числах</b><br>Сроки, окна ставок, пороги лимитов и задержки видео — расчётная модель по типичным правилам операторов и студий на 2026 год, не замер конкретного сайта.</div>
+    <div><b>Редакция «Разбор раунда»</b><br>Обновлено 1 октября 2026. Страница не принимает ставки и не ведёт на кассы операторов.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('ilvTheme');if(!b)return;b.hidden=false;
+  var r=document.documentElement;
+  try{var s=localStorage.getItem('ilv-theme');if(s==='dark'||s==='light')r.setAttribute('data-theme',s);}catch(e){}
+  b.addEventListener('click',function(){
+    var dark=r.getAttribute('data-theme')==='dark'||(!r.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme:dark)').matches);
+    var next=dark?'light':'dark';r.setAttribute('data-theme',next);
+    try{localStorage.setItem('ilv-theme',next);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
